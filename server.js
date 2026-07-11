@@ -308,7 +308,7 @@ app.get('*', (req, res) => {
 initializeDatabase()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`KalyanaMalam backend is running at http://localhost:${PORT}`);
+      console.log(`கல்யாணம் - தமிழ் மணமேடை running at http://localhost:${PORT}`);
     });
   })
   .catch((error) => {
