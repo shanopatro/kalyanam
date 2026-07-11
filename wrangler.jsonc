@@ -6,7 +6,7 @@
     "enabled": true
   },
   "assets": {
-    "directory": "dist"     // அல்லது public அல்லது build
+    "directory": "."     // தற்போதைக்கு முழு folder ஐயும் பயன்படுத்த
   },
   "compatibility_flags": [
     "nodejs_compat"

@@ -1,19 +1,12 @@
 {
-  "name": "kalyanam-website-backend",
-  "version": "1.0.0",
-  "description": "Backend option for the KalyanaMalam website",
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kalyanam",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "deploy": "wrangler deploy",
-    "preview": "wrangler dev"
-  },
-  "dependencies": {
-    "express": "^4.21.2",
-    "sqlite3": "^5.1.7"
-  },
-  "devDependencies": {
-    "wrangler": "^4.110.0"
+  "compatibility_date": "2026-07-11",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "observability": {
+    "enabled": true
   }
 }
