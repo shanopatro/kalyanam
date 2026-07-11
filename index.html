@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KalyanaMalam — தமிழ் திருமண தகவல் மையம்</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Toast Container -->
+<div id="toastContainer" class="fixed top-6 right-6 z-[9999] flex flex-col gap-3" aria-live="polite"></div>
+
+<!-- Navigation -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-[var(--border)] transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2 group" onclick="navigateTo('home')">
+      <span class="text-2xl thali-glow">💍</span>
+      <div>
+        <span class="font-['Playfair_Display'] text-xl font-bold text-[var(--maroon)] leading-none block">KalyanaMalam</span>
+        <span class="text-[10px] text-[var(--muted)] tracking-widest uppercase">தமிழ் திருமணம்</span>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#" onclick="navigateTo('home')" class="text-[var(--muted)] hover:text-[var(--accent)] transition font-medium text-sm">முகப்பு</a>
+      <a href="#" onclick="navigateTo('browse')" class="text-[var(--muted)] hover:text-[var(--accent)] transition font-medium text-sm">சுயவிவரங்கள்</a>
+      <a href="#" onclick="navigateTo('search')" class="text-[var(--muted)] hover:text-[var(--accent)] transition font-medium text-sm">தேடல்</a>
+      <a href="#" onclick="navigateTo('stories')" class="text-[var(--muted)] hover:text-[var(--accent)] transition font-medium text-sm">வெற்றிக் கதைகள்</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <div id="authButtons">
+        <button onclick="openModal('login')" class="px-5 py-2.5 rounded-full text-sm font-semibold text-[var(--accent)] border-2 border-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition-all duration-300">உள்நுழை</button>
+        <button onclick="openModal('register')" class="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[var(--accent)] hover:bg-[var(--deep)] transition-all duration-300 btn-shimmer hidden sm:inline-block ml-2">இலவச பதிவு</button>
+      </div>
+      <div id="userMenu" class="hidden items-center gap-3">
+        <button onclick="navigateTo('dashboard')" class="flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--cream)] border border-[var(--border)] hover:border-[var(--accent)] transition-all text-sm font-medium">
+          <img id="navAvatar" src="" alt="" class="w-7 h-7 rounded-full object-cover border-2 border-[var(--gold)]">
+          <span id="navName" class="hidden sm:inline"></span>
+        </button>
+        <button onclick="logout()" class="p-2.5 rounded-full hover:bg-red-50 text-[var(--muted)] hover:text-[var(--danger)] transition" title="வெளியேறு"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-[var(--fg)]" aria-label="Menu"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-[var(--border)] px-6 py-4 bg-[var(--bg)]">
+    <div class="flex flex-col gap-3">
+      <a href="#" onclick="navigateTo('home');toggleMobileMenu()" class="py-2 text-[var(--muted)] hover:text-[var(--accent)] font-medium">முகப்பு</a>
+      <a href="#" onclick="navigateTo('browse');toggleMobileMenu()" class="py-2 text-[var(--muted)] hover:text-[var(--accent)] font-medium">சுயவிவரங்கள்</a>
+      <a href="#" onclick="navigateTo('search');toggleMobileMenu()" class="py-2 text-[var(--muted)] hover:text-[var(--accent)] font-medium">தேடல்</a>
+      <a href="#" onclick="navigateTo('stories');toggleMobileMenu()" class="py-2 text-[var(--muted)] hover:text-[var(--accent)] font-medium">வெற்றிக் கதைகள்</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main id="mainContent">
+
+<!-- HOME -->
+<div id="page-home">
+  <section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+    <div class="blob w-[500px] h-[500px] bg-[var(--accent)] top-20 -left-40"></div>
+    <div class="blob w-[400px] h-[400px] bg-[var(--saffron)] bottom-20 right-[-100px]" style="animation-delay:3s"></div>
+    <div class="blob w-[300px] h-[300px] bg-[var(--gold)] top-1/2 left-1/3" style="animation-delay:5s"></div>
+    <svg class="floating-kolam w-32 h-32 top-[15%] left-[8%]" viewBox="0 0 100 100" style="animation-delay:0s"><circle cx="50" cy="50" r="45" fill="none" stroke="var(--maroon)" stroke-width="2"/><circle cx="50" cy="50" r="30" fill="none" stroke="var(--maroon)" stroke-width="1.5"/><circle cx="50" cy="50" r="15" fill="none" stroke="var(--maroon)" stroke-width="1"/><line x1="50" y1="5" x2="50" y2="95" stroke="var(--maroon)" stroke-width="1"/><line x1="5" y1="50" x2="95" y2="50" stroke="var(--maroon)" stroke-width="1"/><line x1="15" y1="15" x2="85" y2="85" stroke="var(--maroon)" stroke-width="0.8"/><line x1="85" y1="15" x2="15" y2="85" stroke="var(--maroon)" stroke-width="0.8"/></svg>
+    <svg class="floating-kolam w-24 h-24 bottom-[20%] right-[12%]" viewBox="0 0 100 100" style="animation-delay:4s"><circle cx="50" cy="50" r="40" fill="none" stroke="var(--maroon)" stroke-width="2"/><circle cx="50" cy="50" r="25" fill="none" stroke="var(--maroon)" stroke-width="1.5"/><path d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40Z" fill="none" stroke="var(--maroon)" stroke-width="1"/></svg>
+    <svg class="floating-kolam w-20 h-20 top-[55%] left-[45%]" viewBox="0 0 100 100" style="animation-delay:7s"><circle cx="50" cy="50" r="35" fill="none" stroke="var(--maroon)" stroke-width="2"/><circle cx="50" cy="20" r="8" fill="none" stroke="var(--maroon)" stroke-width="1.5"/><circle cx="80" cy="65" r="8" fill="none" stroke="var(--maroon)" stroke-width="1.5"/><circle cx="20" cy="65" r="8" fill="none" stroke="var(--maroon)" stroke-width="1.5"/></svg>
+    <div id="heroParticles" class="absolute inset-0 pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-16 items-center">
+      <div class="space-y-8">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--cream)] border border-[var(--border)]"><span class="w-2 h-2 rounded-full bg-[var(--success)] pulse-ring inline-block"></span><span class="text-sm font-medium text-[var(--muted)]">15,000+ சரிபார்க்கப்பட்ட சுயவிவரங்கள்</span></div>
+        <h1 class="text-5xl lg:text-7xl font-black leading-[1.05] text-[var(--maroon)]">உங்கள் வாழ்க்கை<br><span class="gradient-text">துணையை</span> தேடுங்கள்<br><span class="text-3xl lg:text-4xl text-[var(--gold)]">இங்கே</span></h1>
+        <p class="text-lg text-[var(--muted)] max-w-md leading-relaxed">தமிழ்நாட்டின் மிகவும் நம்பகமான திருமண தளம். அனைத்து சமூகங்களிலும் உள்ள ஆயிரக்கணக்கான சரிபார்க்கப்பட்ட சுயவிவரங்களிலிருந்து உங்கள் வாழ்க்கைத் துணையைக் கண்டறியுங்கள்.</p>
+        <div class="flex flex-wrap gap-4">
+          <button onclick="openModal('register')" class="px-8 py-4 rounded-full bg-[var(--accent)] text-white font-bold text-lg hover:bg-[var(--deep)] transition-all duration-300 btn-shimmer shadow-lg shadow-[var(--accent)]/20">இலவச பதிவு <i class="fas fa-arrow-right ml-2"></i></button>
+          <button onclick="navigateTo('browse')" class="px-8 py-4 rounded-full border-2 border-[var(--border)] text-[var(--fg)] font-bold text-lg hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-300">சுயவிவரங்கள் பார்க்க</button>
+        </div>
+        <div class="flex gap-10 pt-4">
+          <div><div class="text-3xl font-black text-[var(--maroon)]" data-count="15832">0</div><div class="text-sm text-[var(--muted)] mt-1">சுயவிவரங்கள்</div></div>
+          <div><div class="text-3xl font-black text-[var(--maroon)]" data-count="4621">0</div><div class="text-sm text-[var(--muted)] mt-1">வெற்றி ஜோடிகள்</div></div>
+          <div><div class="text-3xl font-black text-[var(--maroon)]" data-count="98">0</div><div class="text-sm text-[var(--muted)] mt-1">% சரிபார்ப்பு</div></div>
+        </div>
+      </div>
+      <div class="relative hidden lg:block">
+        <div class="relative w-[480px] h-[560px] mx-auto">
+          <div class="absolute top-0 right-0 w-72 h-80 rounded-3xl overflow-hidden shadow-2xl shadow-[var(--accent)]/10 border-4 border-white rotate-3 hover:rotate-0 transition-transform duration-500"><img src="https://picsum.photos/seed/tamilcouple1/400/500.jpg" alt="தமிழ் தம்பதிகள்" class="w-full h-full object-cover"></div>
+          <div class="absolute bottom-0 left-0 w-64 h-72 rounded-3xl overflow-hidden shadow-2xl shadow-[var(--gold)]/10 border-4 border-white -rotate-3 hover:rotate-0 transition-transform duration-500"><img src="https://picsum.photos/seed/tamilwedding/400/500.jpg" alt="திருமணம்" class="w-full h-full object-cover"></div>
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white shadow-xl flex items-center justify-center z-10 thali-glow"><span class="text-3xl">💍</span></div>
+          <div class="absolute -left-8 top-20 bg-white rounded-2xl p-4 shadow-xl border border-[var(--border)] animate-bounce" style="animation-duration:3s"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"><i class="fas fa-check text-green-600"></i></div><div><div class="text-sm font-bold">ஜோடி கிடைத்தது!</div><div class="text-xs text-[var(--muted)]">2 நிமிடம் முன்</div></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--muted)]"><span class="text-xs tracking-widest uppercase">Scroll</span><div class="w-6 h-10 rounded-full border-2 border-[var(--muted)] flex justify-center pt-2"><div class="w-1.5 h-3 rounded-full bg-[var(--muted)] animate-bounce"></div></div></div>
+  </section>
+
+  <section class="py-24 relative reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16"><span class="text-sm font-semibold tracking-widest uppercase text-[var(--accent)]">எளிய செயல்முறை</span><h2 class="text-4xl lg:text-5xl font-black text-[var(--maroon)] mt-3">எப்படி செயல்படுகிறது</h2><p class="text-[var(--muted)] mt-4 max-w-lg mx-auto">4 எளிய படிகளில் உங்கள் வாழ்க்கைத் துணையைக் கண்டறியுங்கள்</p></div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="relative text-center p-8 rounded-3xl bg-white border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 group hover:shadow-lg"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-bold text-sm">1</div><div class="w-16 h-16 rounded-2xl bg-[var(--cream)] flex items-center justify-center mx-auto mb-5 group-hover:bg-[var(--accent)]/10 transition"><i class="fas fa-user-plus text-[var(--accent)] text-xl"></i></div><h3 class="text-lg font-bold text-[var(--deep)] mb-2">பதிவு செய்யுங்கள்</h3><p class="text-sm text-[var(--muted)]">உங்கள் விவரங்கள், விருப்பங்கள் மற்றும் புகைப்படங்களுடன் சுயவிவரத்தை உருவாக்குங்கள்</p></div>
+        <div class="relative text-center p-8 rounded-3xl bg-white border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 group hover:shadow-lg"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-bold text-sm">2</div><div class="w-16 h-16 rounded-2xl bg-[var(--cream)] flex items-center justify-center mx-auto mb-5 group-hover:bg-[var(--accent)]/10 transition"><i class="fas fa-search text-[var(--accent)] text-xl"></i></div><h3 class="text-lg font-bold text-[var(--deep)] mb-2">தேடுங்கள்</h3><p class="text-sm text-[var(--muted)]">உங்கள் விருப்பங்களை அடிப்படையாகக் கொண்டு சுயவிவரங்களைத் தேடுங்கள்</p></div>
+        <div class="relative text-center p-8 rounded-3xl bg-white border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 group hover:shadow-lg"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-bold text-sm">3</div><div class="w-16 h-16 rounded-2xl bg-[var(--cream)] flex items-center justify-center mx-auto mb-5 group-hover:bg-[var(--accent)]/10 transition"><i class="fas fa-comments text-[var(--accent)] text-xl"></i></div><h3 class="text-lg font-bold text-[var(--deep)] mb-2">தொடர்பு கொள்ளுங்கள்</h3><p class="text-sm text-[var(--muted)]">ஆர்வங்களை அனுப்பி உரையாடலைத் தொடங்குங்கள்</p></div>
+        <div class="relative text-center p-8 rounded-3xl bg-white border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 group hover:shadow-lg"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-bold text-sm">4</div><div class="w-16 h-16 rounded-2xl bg-[var(--cream)] flex items-center justify-center mx-auto mb-5 group-hover:bg-[var(--accent)]/10 transition"><i class="fas fa-ring text-[var(--accent)] text-xl"></i></div><h3 class="text-lg font-bold text-[var(--deep)] mb-2">திருமணம் செய்யுங்கள்</h3><p class="text-sm text-[var(--muted)]">நேரில் சந்தித்து நம்பிக்கையை வளர்த்து புதிய வாழ்க்கையைத் தொடங்குங்கள்</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-[var(--cream)] relative reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 gap-4"><div><span class="text-sm font-semibold tracking-widest uppercase text-[var(--accent)]">சிறப்பு தேர்வு</span><h2 class="text-4xl lg:text-5xl font-black text-[var(--maroon)] mt-3">சிறப்பு சுயவிவரங்கள்</h2></div><button onclick="navigateTo('browse')" class="text-[var(--accent)] font-semibold hover:underline flex items-center gap-2">அனைத்தும் பார்க்க <i class="fas fa-arrow-right"></i></button></div>
+      <div id="featuredProfiles" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </div>
+  </section>
+
+  <section class="py-24 relative overflow-hidden reveal">
+    <div class="absolute inset-0 bg-gradient-to-br from-[var(--maroon)] via-[var(--deep)] to-[var(--accent)]"></div>
+    <div class="absolute inset-0 opacity-10" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%221%22 fill=%22white%22/></svg>')"></div>
+    <div class="relative max-w-3xl mx-auto px-6 text-center text-white">
+      <span class="text-5xl mb-6 block thali-glow">💍</span>
+      <h2 class="text-4xl lg:text-5xl font-black mb-6">உங்கள் துணை காத்திருக்கிறார்</h2>
+      <p class="text-lg opacity-80 mb-10 max-w-xl mx-auto">சரியான நபரைத் தவறவிடாதீர்கள். KalyanaMalam-ல் காதலைக் கண்டறிந்த ஆயிரக்கணக்கான மகிழ்ச்சியான தம்பதிகளில் சேருங்கள்.</p>
+      <button onclick="openModal('register')" class="px-10 py-4 rounded-full bg-white text-[var(--maroon)] font-bold text-lg hover:bg-[var(--gold)] hover:text-white transition-all duration-300 shadow-2xl">இலவச சுயவிவரம் உருவாக்கு <i class="fas fa-arrow-right ml-2"></i></button>
+    </div>
+  </section>
+</div>
+
+<!-- BROWSE -->
+<div id="page-browse" class="hidden pt-28 pb-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-10"><h1 class="text-4xl font-black text-[var(--maroon)]">சுயவிவரங்கள் பார்க்க</h1><p class="text-[var(--muted)] mt-2">சரிபார்க்கப்பட்ட சுயவிவரங்களிலிருந்து உங்கள் வாழ்க்கைத் துணையைக் கண்டறியுங்கள்</p></div>
+    <div class="bg-white rounded-2xl border border-[var(--border)] p-6 mb-8 flex flex-wrap gap-4 items-end">
+      <div class="flex-1 min-w-[150px]"><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-1 block">தேடும் வகை</label><select id="filterGender" onchange="applyFilters()" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm font-medium"><option value="all">அனைத்தும்</option><option value="Bride">மணமகள்</option><option value="Groom">மணமன்</option></select></div>
+      <div class="flex-1 min-w-[150px]"><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-1 block">மதம்</label><select id="filterReligion" onchange="applyFilters()" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm font-medium"><option value="all">அனைத்தும்</option><option value="Hindu">இந்து</option><option value="Christian">கிறிஸ்தவர்</option><option value="Muslim">இஸ்லாமியர்</option></select></div>
+      <div class="flex-1 min-w-[150px]"><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-1 block">வயது</label><select id="filterAge" onchange="applyFilters()" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm font-medium"><option value="all">அனைத்து வயதுகள்</option><option value="21-25">21-25</option><option value="26-30">26-30</option><option value="31-35">31-35</option><option value="36-40">36-40</option></select></div>
+      <div class="flex-1 min-w-[150px]"><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-1 block">நகரம்</label><select id="filterLocation" onchange="applyFilters()" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm font-medium"><option value="all">அனைத்து நகரங்கள்</option><option value="Chennai">சென்னை</option><option value="Coimbatore">கோயம்புத்தூர்</option><option value="Madurai">மதுரை</option><option value="Salem">சேலம்</option><option value="Trichy">திருச்சி</option><option value="Thanjavur">தஞ்சாவூர்</option></select></div>
+      <button onclick="resetFilters()" class="px-6 py-3 rounded-xl border-2 border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition font-medium text-sm"><i class="fas fa-undo mr-1"></i> மீட்டமை</button>
+    </div>
+    <div id="browseGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    <div id="noResults" class="hidden text-center py-20"><i class="fas fa-search text-6xl text-[var(--border)] mb-4"></i><p class="text-xl font-bold text-[var(--deep)]">சுயவிவரங்கள் எதுவும் கிடைக்கவில்லை</p><p class="text-[var(--muted)] mt-2">வடிப்பான்களை மாற்றிப் பாருங்கள்</p></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div id="page-search" class="hidden pt-28 pb-24">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12"><h1 class="text-4xl font-black text-[var(--maroon)]">மேம்பட்ட தேடல்</h1><p class="text-[var(--muted)] mt-2">விரிவான வடிப்பான்களுடன் உங்கள் தேடலைச் சுருக்குங்கள்</p></div>
+    <div class="bg-white rounded-3xl border border-[var(--border)] p-8 shadow-sm">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">தேடும் வகை</label><select id="searchGender" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">தேர்வு செய்யுங்கள்</option><option value="Bride">மணமகள்</option><option value="Groom">மணமன்</option></select></div>
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">வயது (இருந்து)</label><input type="number" id="searchAgeFrom" min="18" max="60" placeholder="18" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">வயது (வரை)</label><input type="number" id="searchAgeTo" min="18" max="60" placeholder="60" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">மதம்</label><select id="searchReligion" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">ஏதும்</option><option value="Hindu">இந்து</option><option value="Christian">கிறிஸ்தவர்</option><option value="Muslim">இஸ்லாமியர்</option></select></div>
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">கல்வி</label><select id="searchEducation" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">ஏதும்</option><option value="High School">பள்ளிப்படிப்பு</option><option value="Bachelor's">இளங்கலை</option><option value="Master's">முதுகலை</option><option value="Doctorate">முனைவர்</option><option value="Professional">தொழில்முறை</option></select></div>
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">வேலை</label><input type="text" id="searchOccupation" placeholder="எ.கா. மென்பொருள் பொறியாளர்" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">நகரம்</label><input type="text" id="searchCity" placeholder="எ.கா. சென்னை" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+        <div><label class="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2 block">ஆண்டு வருமானம்</label><select id="searchIncome" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">ஏதும்</option><option value="5-10">5-10 லட்சம்</option><option value="10-20">10-20 லட்சம்</option><option value="20-50">20-50 லட்சம்</option><option value="50+">50+ லட்சம்</option></select></div>
+      </div>
+      <div class="flex gap-4 mt-8"><button onclick="performAdvancedSearch()" class="flex-1 py-4 rounded-xl bg-[var(--accent)] text-white font-bold hover:bg-[var(--deep)] transition btn-shimmer"><i class="fas fa-search mr-2"></i> சுயவிவரங்கள் தேடு</button><button onclick="clearAdvancedSearch()" class="px-8 py-4 rounded-xl border-2 border-[var(--border)] text-[var(--muted)] font-bold hover:border-[var(--accent)] transition">அழி</button></div>
+    </div>
+    <div id="searchResults" class="mt-10"></div>
+  </div>
+</div>
+
+<!-- STORIES -->
+<div id="page-stories" class="hidden pt-28 pb-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16"><span class="text-sm font-semibold tracking-widest uppercase text-[var(--accent)]">உண்மையான காதல் கதைகள்</span><h1 class="text-4xl lg:text-5xl font-black text-[var(--maroon)] mt-3">வெற்றிக் கதைகள்</h1><p class="text-[var(--muted)] mt-4 max-w-lg mx-auto">KalyanaMalam-ல் தங்கள் துணையைக் கண்டறிந்த தம்பதிகள்</p></div>
+    <div id="storiesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="hidden pt-28 pb-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-10"><h1 class="text-4xl font-black text-[var(--maroon)]">என் கட்டுப்பாட்டு பலகை</h1><p class="text-[var(--muted)] mt-2">உங்கள் சுயவிவரம் மற்றும் தொடர்புகளை நிர்வகியுங்கள்</p></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <div class="bg-white rounded-2xl border border-[var(--border)] p-6 hover:shadow-lg transition"><div class="flex items-center justify-between mb-3"><div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center"><i class="fas fa-heart text-[var(--accent)]"></i></div><span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full"><i class="fas fa-arrow-up mr-1"></i>+12</span></div><div class="text-2xl font-black text-[var(--deep)]" id="statInterests">0</div><div class="text-sm text-[var(--muted)]">பெறப்பட்ட ஆர்வங்கள்</div></div>
+      <div class="bg-white rounded-2xl border border-[var(--border)] p-6 hover:shadow-lg transition"><div class="flex items-center justify-between mb-3"><div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center"><i class="fas fa-paper-plane text-blue-500"></i></div></div><div class="text-2xl font-black text-[var(--deep)]" id="statSent">0</div><div class="text-sm text-[var(--muted)]">அனுப்பிய ஆர்வங்கள்</div></div>
+      <div class="bg-white rounded-2xl border border-[var(--border)] p-6 hover:shadow-lg transition"><div class="flex items-center justify-between mb-3"><div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center"><i class="fas fa-eye text-purple-500"></i></div></div><div class="text-2xl font-black text-[var(--deep)]" id="statViews">0</div><div class="text-sm text-[var(--muted)]">சுயவிவரப் பார்வைகள்</div></div>
+      <div class="bg-white rounded-2xl border border-[var(--border)] p-6 hover:shadow-lg transition"><div class="flex items-center justify-between mb-3"><div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center"><i class="fas fa-star text-yellow-500"></i></div></div><div class="text-2xl font-black text-[var(--deep)]" id="statMatches">0</div><div class="text-sm text-[var(--muted)]">பொருத்த மதிப்பெண்கள்</div></div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="bg-white rounded-3xl border border-[var(--border)] p-8 shadow-sm">
+        <div class="flex items-center gap-4 mb-6">
+          <img id="dashAvatar" src="https://picsum.photos/seed/dashavatar/120/120" alt="Profile" class="w-20 h-20 rounded-3xl object-cover border-4 border-[var(--cream)]">
+          <div>
+            <h2 id="dashName" class="text-2xl font-black text-[var(--maroon)]">உங்கள் பெயர்</h2>
+            <p id="dashSubtitle" class="text-[var(--muted)] mt-2">வயது, உயரம் | வேலை | நகரம்</p>
+            <div id="dashTags" class="flex flex-wrap gap-2 mt-4"></div>
+          </div>
+        </div>
+        <div id="dashDetails" class="space-y-4"></div>
+        <button type="button" onclick="openEditProfile()" class="mt-8 w-full py-4 rounded-full bg-[var(--accent)] text-white font-semibold hover:bg-[var(--deep)] transition">சுயவிவரம் திருத்து</button>
+      </div>
+
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white rounded-3xl border border-[var(--border)] p-6 shadow-sm">
+          <div class="flex flex-wrap gap-2 mb-6">
+            <button type="button" class="tab-btn active px-4 py-3 rounded-full border border-[var(--border)] text-sm font-semibold" data-tab="profile" onclick="switchDashTab('profile')">என் சுயவிவரம்</button>
+            <button type="button" class="tab-btn px-4 py-3 rounded-full border border-[var(--border)] text-sm font-semibold" data-tab="sent" onclick="switchDashTab('sent')">அனுப்பியது</button>
+            <button type="button" class="tab-btn px-4 py-3 rounded-full border border-[var(--border)] text-sm font-semibold" data-tab="received" onclick="switchDashTab('received')">பெற்றது</button>
+            <button type="button" class="tab-btn px-4 py-3 rounded-full border border-[var(--border)] text-sm font-semibold" data-tab="shortlisted" onclick="switchDashTab('shortlisted')">பட்டியலில்</button>
+          </div>
+          <div id="tab-profile" class="dash-tab">
+            <p class="text-[var(--muted)]">உங்கள் கட்டுப்பாட்டு பலகையில் உங்கள் முக்கிய விவரங்கள் மற்றும் புள்ளிவிவரங்கள் காணப்படும்.</p>
+          </div>
+          <div id="tab-sent" class="dash-tab hidden">
+            <div id="sentInterestsList" class="grid sm:grid-cols-2 gap-4"></div>
+            <div id="noSentInterests" class="text-center py-10 text-[var(--muted)] hidden">இன்னும் ஆர்வங்கள் அனுப்பப்படவில்லை</div>
+          </div>
+          <div id="tab-received" class="dash-tab hidden">
+            <div id="receivedInterestsList" class="grid sm:grid-cols-2 gap-4"></div>
+            <div id="noReceivedInterests" class="text-center py-10 text-[var(--muted)] hidden">இன்னும் ஆர்வங்களை பெறவில்லை</div>
+          </div>
+          <div id="tab-shortlisted" class="dash-tab hidden">
+            <div id="shortlistedList" class="grid sm:grid-cols-2 gap-4"></div>
+            <div id="noShortlisted" class="text-center py-10 text-[var(--muted)] hidden">இன்னும் எதையும் பட்டியலிடவில்லை</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-profileDetail" class="hidden pt-28 pb-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div id="profileDetailContent"></div>
+  </div>
+</div>
+
+<div id="modal-login" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+  <div class="modal-content relative w-full max-w-md bg-white rounded-3xl p-8">
+    <button type="button" onclick="closeModal('login')" class="absolute top-4 right-4 text-[var(--muted)] hover:text-[var(--accent)]"><i class="fas fa-times"></i></button>
+    <h2 class="text-3xl font-black text-[var(--maroon)] mb-4">உள்நுழை</h2>
+    <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+      <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">மின்னஞ்சல்</label><input type="email" id="loginEmail" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+      <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">கடவுச்சொல்</label><div class="relative"><input type="password" id="loginPassword" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><button type="button" onclick="togglePassword('loginPassword', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted)]"><i class="fas fa-eye"></i></button></div></div>
+      <button type="submit" class="w-full py-4 rounded-full bg-[var(--accent)] text-white font-semibold hover:bg-[var(--deep)] transition">உள்நுழைய</button>
+    </form>
+  </div>
+</div>
+
+<div id="modal-register" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+  <div class="modal-content relative w-full max-w-3xl bg-white rounded-3xl p-8">
+    <button type="button" onclick="closeModal('register')" class="absolute top-4 right-4 text-[var(--muted)] hover:text-[var(--accent)]"><i class="fas fa-times"></i></button>
+    <h2 class="text-3xl font-black text-[var(--maroon)] mb-4">பதிவு</h2>
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-3">
+        <span id="regStep1Dot" class="w-10 h-10 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-bold">1</span>
+        <span id="regStep2Dot" class="w-10 h-10 rounded-full bg-[var(--border)] text-[var(--muted)] flex items-center justify-center font-bold">2</span>
+        <span id="regStep3Dot" class="w-10 h-10 rounded-full bg-[var(--border)] text-[var(--muted)] flex items-center justify-center font-bold">3</span>
+      </div>
+      <div class="flex-1 h-1 bg-[var(--border)] rounded-full ml-4 relative">
+        <div id="regLine1" class="absolute top-0 left-0 h-1 w-1/3 bg-[var(--accent)] rounded-full"></div>
+        <div id="regLine2" class="absolute top-0 left-1/3 h-1 w-1/3 bg-[var(--border)] rounded-full"></div>
+      </div>
+    </div>
+    <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-6">
+      <div id="regStep1" class="">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">முதல் பெயர்</label><input id="regFirstName" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">கடைசி பெயர்</label><input id="regLastName" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">பாலினம்</label><select id="regGender" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">தேர்ந்தெடுக்கவும்</option><option value="Female">மணமகள்</option><option value="Male">மணமன்</option></select></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">பிறந்த தேதி</label><input id="regDob" type="date" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div class="sm:col-span-2"><label class="block text-sm font-semibold text-[var(--muted)] mb-2">மின்னஞ்சல்</label><input id="regEmail" type="email" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">தொலைபேசி</label><input id="regPhone" type="tel" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">கடவுச்சொல்</label><div class="relative"><input id="regPassword" type="password" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><button type="button" onclick="togglePassword('regPassword', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted)]"><i class="fas fa-eye"></i></button></div></div>
+        </div>
+        <div class="flex justify-end"><button type="button" onclick="regNextStep(2)" class="px-6 py-3 rounded-full bg-[var(--accent)] text-white font-semibold hover:bg-[var(--deep)] transition">அடுத்து</button></div>
+      </div>
+
+      <div id="regStep2" class="hidden">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">மதம்</label><select id="regReligion" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">த் தேர்ந்தெடுக்கவும்</option><option value="Hindu">இந்து</option><option value="Christian">கிறிஸ்துவர்</option><option value="Muslim">இஸ்லாமியர்</option></select></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">கல்வி</label><select id="regEducation" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">த் தேர்ந்தெடுக்கவும்</option><option value="Bachelor's">இளங்கலை</option><option value="Master's">முதுகலை</option><option value="Doctorate">முனைவர்</option><option value="Professional">தொழில்முறை</option></select></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">வேலை</label><input id="regOccupation" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">நகரம்</label><input id="regCity" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">வருமானம்</label><select id="regIncome" required class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">தேர்ந்தெடுக்கவும்</option><option value="5-10 LPA">5-10 LPA</option><option value="10-20 LPA">10-20 LPA</option><option value="20-50 LPA">20-50 LPA</option><option value="50+ LPA">50+ LPA</option></select></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">முகவரி</label><input id="regCaste" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">உயரம்</label><input id="regHeight" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">திருமண நிலை</label><select id="regMaritalStatus" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="Never Married">முதல் திருமணம்</option><option value="Widowed">மனைவி/மணமகன் இறந்தவர்</option><option value="Divorced">விலகியவர்</option></select></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">தாய் மொழி</label><input id="regMotherTongue" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+        </div>
+        <div class="flex justify-between">
+          <button type="button" onclick="regNextStep(1)" class="px-6 py-3 rounded-full border border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] transition">முன்னையது</button>
+          <button type="button" onclick="regNextStep(3)" class="px-6 py-3 rounded-full bg-[var(--accent)] text-white hover:bg-[var(--deep)] transition">அடுத்து</button>
+        </div>
+      </div>
+
+      <div id="regStep3" class="hidden">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">இசைவயதுகள்</label><input id="regPrefAgeFrom" type="number" min="18" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm" placeholder="இருவருக்குமான குறைந்த வயது"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">உயர் வயது</label><input id="regPrefAgeTo" type="number" min="18" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm" placeholder="இருவருக்குமான அதிக வயது"></div>
+          <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">மதம்</label><select id="regPrefReligion" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="">இயல்பானது</option><option value="Hindu">இந்து</option><option value="Christian">கிறிஸ்துவர்</option><option value="Muslim">இஸ்லாமியர்</option></select></div>
+          <div class="sm:col-span-2"><label class="block text-sm font-semibold text-[var(--muted)] mb-2">குறிப்பு</label><textarea id="regAbout" rows="3" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></textarea></div>
+          <div class="sm:col-span-2"><label class="block text-sm font-semibold text-[var(--muted)] mb-2">குடும்ப விவரங்கள்</label><textarea id="regFamily" rows="3" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></textarea></div>
+        </div>
+        <div class="flex justify-between">
+          <button type="button" onclick="regNextStep(2)" class="px-6 py-3 rounded-full border border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] transition">முன்னையது</button>
+          <button type="submit" class="px-6 py-3 rounded-full bg-[var(--accent)] text-white hover:bg-[var(--deep)] transition">பதிவு</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="modal-editProfile" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+  <div class="modal-content relative w-full max-w-2xl bg-white rounded-3xl p-8">
+    <button type="button" onclick="closeModal('editProfile')" class="absolute top-4 right-4 text-[var(--muted)] hover:text-[var(--accent)]"><i class="fas fa-times"></i></button>
+    <h2 class="text-3xl font-black text-[var(--maroon)] mb-4">சுயவிவரம் திருத்து</h2>
+    <form id="editProfileForm" onsubmit="handleEditProfile(event)" class="space-y-4">
+      <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">சுயவிவரம்</label><textarea id="editAbout" rows="3" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></textarea></div>
+      <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">வேலை</label><input id="editOccupation" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+      <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">நகரம்</label><input id="editCity" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></div>
+      <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">வருமானம்</label><select id="editIncome" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"><option value="Below 5 LPA">Below 5 LPA</option><option value="5-10 LPA">5-10 LPA</option><option value="10-20 LPA">10-20 LPA</option><option value="20-50 LPA">20-50 LPA</option><option value="50+ LPA">50+ LPA</option></select></div>
+      <div><label class="block text-sm font-semibold text-[var(--muted)] mb-2">குடும்ப விவரங்கள்</label><textarea id="editFamily" rows="3" class="w-full px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] text-sm"></textarea></div>
+      <button type="submit" class="w-full py-4 rounded-full bg-[var(--accent)] text-white font-semibold hover:bg-[var(--deep)] transition">சேமிக்க</button>
+    </form>
+  </div>
+</div>
+
+</main>
+<script src="script.js"></script>
+</body>
+</html>
